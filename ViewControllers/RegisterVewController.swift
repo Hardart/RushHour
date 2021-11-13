@@ -107,16 +107,6 @@ class RegisterVewController: UIViewController {
         return button
     }()
     
-    private let registerButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("регистрация", for: UIControl.State.normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitleColor(.systemGray, for: .highlighted)
-        button.titleLabel?.font = button.titleLabel?.font.withSize(15)
-//        button.backgroundColor = .systemGreen
-        button.sizeToFit()
-        return button
-    }()
      
     //MARK: -Свойства
     
@@ -136,7 +126,7 @@ class RegisterVewController: UIViewController {
         logoSetup()
         loginSetup()
         loginButtonSetup()
-        registerButtonSetup()
+        
         
         loginButton.addTarget(self, action: #selector(registerButtonTaped), for: .touchUpInside)
 //        registerButton.addTarget(self, action: #selector(toRegisterVC), for: .touchUpInside)
@@ -230,19 +220,12 @@ class RegisterVewController: UIViewController {
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         loginButton.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 50).isActive = true
+        loginButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20).isActive = true
         loginButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    func registerButtonSetup(){
-        scrollView.addSubview(registerButton)
-        registerButton.translatesAutoresizingMaskIntoConstraints = false
-        registerButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor).isActive = true
-        registerButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20).isActive = true
-        registerButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.25).isActive = true
-        registerButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-    }
+    
     
     //MARK: -Размер клавиатуры для ScrollView
     
