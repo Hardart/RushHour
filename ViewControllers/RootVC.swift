@@ -112,36 +112,50 @@ class RootVC: UIViewController {
     
     func scrollViewSetup(){
         view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.anchors(
+            centerX: view.centerXAnchor,
+            top: view.topAnchor,
+            bottom: view.bottomAnchor,
+            width: view.widthAnchor
+        )
     }
     
     func logoSetup(){
         scrollView.addSubview(logo)
-        logo.translatesAutoresizingMaskIntoConstraints = false
-        logo.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        logo.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50).isActive = true
-        logo.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.3).isActive = true
-        logo.heightAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.3 ).isActive = true
+        logo.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: scrollView.topAnchor,
+            paddingTop: 50,
+            width: scrollView.widthAnchor,
+            height: scrollView.widthAnchor,
+            widthMultiplayer: 0.3,
+            heightMultiplayer: 0.3
+        )
     }
     
     func loginSetup(){
+        let fieldHeight: CGFloat = 40
+        let fieldWith: CGFloat = 0.7
+        
         scrollView.addSubview(login)
-        login.translatesAutoresizingMaskIntoConstraints = false
-        login.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        login.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 80).isActive = true
-        login.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7).isActive = true
-        login.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        login.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: logo.bottomAnchor,
+            paddingTop: 80,
+            width: scrollView.widthAnchor,
+            heightConst: fieldHeight,
+            widthMultiplayer: fieldWith
+        )
         
         scrollView.addSubview(password)
-        password.translatesAutoresizingMaskIntoConstraints = false
-        password.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        password.topAnchor.constraint(equalTo: login.bottomAnchor, constant: 20).isActive = true
-        password.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7).isActive = true
-        password.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        password.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: login.bottomAnchor,
+            paddingTop: 20,
+            width: scrollView.widthAnchor,
+            heightConst: fieldHeight,
+            widthMultiplayer: fieldWith
+        )
     }
     
     func loginButtonSetup(){
@@ -149,7 +163,8 @@ class RootVC: UIViewController {
             icon: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
             title: "Войти",
             background: .systemGray4,
-            iconSize: 30
+            iconSize: 30,
+            spaceBetween: 5
         ))
         scrollView.addSubview(loginButton)
         loginButton.translatesAutoresizingMaskIntoConstraints = false

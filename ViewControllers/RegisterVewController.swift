@@ -19,8 +19,12 @@ class RegisterVewController: UIViewController {
     
     private let logo: UIImageView = {
         let logo = UIImageView()
-        logo.image = UIImage(systemName: "globe")
+        logo.image = UIImage(systemName: "person")
         logo.tintColor = .systemGray4
+        logo.clipsToBounds = true
+        logo.contentMode = .scaleAspectFit
+        logo.layer.borderColor = UIColor.white.cgColor
+        logo.layer.borderWidth = 5.0
         return logo
     }()
     
@@ -128,6 +132,7 @@ class RegisterVewController: UIViewController {
         loginButtonSetup()
         
         
+        
         loginButton.addTarget(self, action: #selector(registerButtonTaped), for: .touchUpInside)
 //        registerButton.addTarget(self, action: #selector(toRegisterVC), for: .touchUpInside)
         logo.isUserInteractionEnabled = true
@@ -143,8 +148,8 @@ class RegisterVewController: UIViewController {
         print("...REGISTER...")
     }
     
+    // меню выбора фото для профиля
     @objc private func changeProfileImg() {
-        print("...LOGO...")
         presentPhotoActionSheet()
     }
     
@@ -152,20 +157,27 @@ class RegisterVewController: UIViewController {
     
     func scrollViewSetup(){
         view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.anchors(
+            centerX: view.centerXAnchor,
+            top: view.topAnchor,
+            bottom: view.bottomAnchor,
+            width: view.widthAnchor
+        )
     }
     
     func logoSetup(){
         scrollView.addSubview(logo)
-        logo.translatesAutoresizingMaskIntoConstraints = false
-        logo.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        logo.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50).isActive = true
-        logo.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.3).isActive = true
-        logo.heightAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.3 ).isActive = true
+        logo.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: scrollView.topAnchor,
+            paddingTop: 50,
+            width: scrollView.widthAnchor,
+            height: scrollView.widthAnchor,
+            widthMultiplayer: 0.3,
+            heightMultiplayer: 0.3
+        )
+        
+        logo.layer.cornerRadius = view.width * 0.3 / 2
     }
     
     func loginSetup(){
@@ -214,7 +226,8 @@ class RegisterVewController: UIViewController {
             icon: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
             title: "Зарегистрироваться",
             background: .systemGray4,
-            iconSize: 30
+            iconSize: 30,
+            spaceBetween: 5
         ))
         scrollView.addSubview(loginButton)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -282,12 +295,12 @@ extension RegisterVewController: UITextFieldDelegate {
     }
 }
 
-extension RegisterVewController: UIImagePickerControllerDelegate {
+extension RegisterVewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func presentPhotoActionSheet(){
         let actionSheet = UIAlertController(
             title: "Изображение профиля",
-            message: "Варианты выбора изображения",
+            message: "Вы можете изменить изображение своего профиля",
             preferredStyle: .actionSheet
         )
         actionSheet.addAction(UIAlertAction(
@@ -298,22 +311,46 @@ extension RegisterVewController: UIImagePickerControllerDelegate {
         actionSheet.addAction(UIAlertAction(
             title: "Сделать фото",
             style: .default,
-            handler: nil)
+            handler: {[weak self] _ in
+                self?.presentCamera()
+            })
         )
         actionSheet.addAction(UIAlertAction(
-            title: "Выбрать из галереи",
+            title: "Выбрать фото",
             style: .default,
-            handler: nil)
+            handler: {[weak self] _ in
+                self?.presentPhotoPicker()
+            })
         )
         
         present(actionSheet, animated: true)
     }
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        <#code#>
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        <#code#>
-//    }
+    
+    func presentCamera(){
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func presentPhotoPicker(){
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
+
+        self.logo.image = selectedImage
+        
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
 

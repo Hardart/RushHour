@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2400DA06273E747200FD9164 /* UIView anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400DA05273E747200FD9164 /* UIView anchors.swift */; };
 		2400DA0A273EB6A700FD9164 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400DA09273EB6A700FD9164 /* RootVC.swift */; };
-		24C50FAF273FE3A7007415DA /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C50FAE273FE3A7007415DA /* UITextView.swift */; };
 		24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C525F7273BD72E009EBAF9 /* AppDelegate.swift */; };
 		24C525FA273BD72E009EBAF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C525F9273BD72E009EBAF9 /* SceneDelegate.swift */; };
 		24C525FF273BD72E009EBAF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24C525FD273BD72E009EBAF9 /* Main.storyboard */; };
@@ -24,7 +23,6 @@
 /* Begin PBXFileReference section */
 		2400DA05273E747200FD9164 /* UIView anchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView anchors.swift"; sourceTree = "<group>"; };
 		2400DA09273EB6A700FD9164 /* RootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootVC.swift; sourceTree = "<group>"; };
-		24C50FAE273FE3A7007415DA /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		24C525F4273BD72E009EBAF9 /* RushHour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RushHour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24C525F7273BD72E009EBAF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24C525F9273BD72E009EBAF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				2400DA05273E747200FD9164 /* UIView anchors.swift */,
-				24C50FAE273FE3A7007415DA /* UITextView.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -184,7 +181,6 @@
 				24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */,
 				24C5260C273BD87F009EBAF9 /* RegisterVewController.swift in Sources */,
 				2400DA06273E747200FD9164 /* UIView anchors.swift in Sources */,
-				24C50FAF273FE3A7007415DA /* UITextView.swift in Sources */,
 				2400DA0A273EB6A700FD9164 /* RootVC.swift in Sources */,
 				24C525FA273BD72E009EBAF9 /* SceneDelegate.swift in Sources */,
 				24C52610273BE5C7009EBAF9 /* TwoLinesButton.swift in Sources */,

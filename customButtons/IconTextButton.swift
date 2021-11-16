@@ -12,11 +12,13 @@ struct IconButtonModel {
     let title: String
     let background: UIColor?
     let iconSize: CGFloat
+    let spaceBetween: CGFloat
 }
 
 final class IconTextButton: UIButton {
     
     private var iconSize = CGFloat()
+    private var elementSpace = CGFloat()
     
     private let label: UILabel = {
         let label = UILabel()
@@ -52,6 +54,7 @@ final class IconTextButton: UIButton {
         label.text = viewModel.title
         iconImage.image = viewModel.icon
         iconSize = viewModel.iconSize
+        elementSpace = viewModel.spaceBetween
         backgroundColor = viewModel.background
         
     }
@@ -60,7 +63,7 @@ final class IconTextButton: UIButton {
         super.layoutSubviews()
         label.sizeToFit()
         
-        let iconX: CGFloat = (frame.size.width - label.frame.size.width - iconSize - 5) / 2
+        let iconX: CGFloat = (frame.size.width - label.frame.size.width - iconSize - elementSpace) / 2
         iconImage.frame = CGRect(
             x: iconX,
             y: (frame.size.height - iconSize)/2,
@@ -69,7 +72,7 @@ final class IconTextButton: UIButton {
         )
         
         label.frame = CGRect(
-            x: iconX + iconSize + 5,
+            x: iconX + iconSize + elementSpace,
             y: 0,
             width: label.frame.size.width,
             height: frame.size.height
