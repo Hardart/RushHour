@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TestVC: UIViewController {
     let button = TwoLinesButton()
     let button2 = TwoLinesButton()
     var changeCol = true
