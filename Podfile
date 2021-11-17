@@ -6,5 +6,8 @@ target 'RushHour' do
   use_frameworks!
 
   # Pods for RushHour
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
 
 end

@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class RegisterVewController: UIViewController {
+class RegisterVC: UIViewController {
     
     //MARK: -Элементы
     
@@ -19,10 +20,10 @@ class RegisterVewController: UIViewController {
     
     private let logo: UIImageView = {
         let logo = UIImageView()
-        logo.image = UIImage(systemName: "person")
+        logo.image = UIImage(systemName: "person.circle.fill")
         logo.tintColor = .systemGray4
         logo.clipsToBounds = true
-        logo.contentMode = .scaleAspectFit
+        logo.contentMode = .scaleAspectFill
         logo.layer.borderColor = UIColor.white.cgColor
         logo.layer.borderWidth = 5.0
         return logo
@@ -33,13 +34,13 @@ class RegisterVewController: UIViewController {
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .continue
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray6
         field.layer.cornerRadius = 6
         field.layer.borderWidth = 1
         field.placeholder = "Введите ваше имя"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
+        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
@@ -48,13 +49,13 @@ class RegisterVewController: UIViewController {
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .continue
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray6
         field.layer.cornerRadius = 6
         field.layer.borderWidth = 1
         field.placeholder = "Введите вашу фамилию"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
+        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
@@ -63,13 +64,13 @@ class RegisterVewController: UIViewController {
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .continue
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray6
         field.layer.cornerRadius = 6
         field.layer.borderWidth = 1
         field.placeholder = "Укажите ваш логин"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
+        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
@@ -78,13 +79,13 @@ class RegisterVewController: UIViewController {
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .continue
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray6
         field.layer.cornerRadius = 6
         field.layer.borderWidth = 1
         field.placeholder = "Укажите вашу почту"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
+        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
@@ -93,19 +94,19 @@ class RegisterVewController: UIViewController {
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .done
-        field.backgroundColor = .white
+        field.backgroundColor = .systemGray6
         field.layer.cornerRadius = 6
         field.layer.borderWidth = 1
         field.placeholder = "Пароль"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
+        field.layer.borderColor = UIColor.white.cgColor
         field.isSecureTextEntry = true
         return field
     }()
     
     private let loginButton: IconTextButton = {
-        let button = IconTextButton()
+        let button = IconTextButton(type: .system)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 6
         return button
@@ -144,8 +145,48 @@ class RegisterVewController: UIViewController {
     //MARK: -Действия кнопок
     
     
+    
+    
     @objc private func registerButtonTaped(){
-        print("...REGISTER...")
+        guard let email = email.text,
+              let nickname = login.text,
+              let firstName = firstName.text,
+              let lastName = lastName.text,
+              let password = password.text,
+              !email.isEmpty,
+              !nickname.isEmpty,
+              !firstName.isEmpty,
+              !lastName.isEmpty,
+              !password.isEmpty else {
+                  alertSomeFieldIsEmpty()
+                  return
+                  
+              }
+        
+        //MARK: -Firebase регистрация
+        DatabaseManager.shared.doesUserExist(with: email, completion: {[weak self] exist in
+            guard !exist else {
+                self?.alertUserAlreadyExist()
+                return
+            }
+            successRegistration()
+        })
+        
+         func successRegistration() {
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self] res, err in
+                guard let self = self else {return}
+                guard res != nil, err == nil else {
+                    print("Error creating user: \(err!)")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: ChatAppUser(nickname: nickname,
+                                                                    firstName: firstName,
+                                                                    lastName: lastName,
+                                                                    email: email))
+                self.navigationController?.dismiss(animated: true, completion: nil)
+            })
+        }
     }
     
     // меню выбора фото для профиля
@@ -275,7 +316,7 @@ class RegisterVewController: UIViewController {
 
 //MARK: -Расширения
 
-extension RegisterVewController: UITextFieldDelegate {
+extension RegisterVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case login:
@@ -295,7 +336,37 @@ extension RegisterVewController: UITextFieldDelegate {
     }
 }
 
-extension RegisterVewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func alertUserAlreadyExist(){
+        let actionSheet = UIAlertController(
+            title: "Внимание!",
+            message: "Пользователь с таким E-mail уже зарегистрирован",
+            preferredStyle: .alert
+        )
+        actionSheet.addAction(UIAlertAction(
+            title: "Ok",
+            style: .cancel,
+            handler: nil)
+        )
+        
+        present(actionSheet, animated: true)
+    }
+    
+    func alertSomeFieldIsEmpty(){
+        let actionSheet = UIAlertController(
+            title: "Внимание!",
+            message: "Необходимо заполнить все поля",
+            preferredStyle: .alert
+        )
+        actionSheet.addAction(UIAlertAction(
+            title: "Ok",
+            style: .cancel,
+            handler: nil)
+        )
+        
+        present(actionSheet, animated: true)
+    }
     
     func presentPhotoActionSheet(){
         let actionSheet = UIAlertController(

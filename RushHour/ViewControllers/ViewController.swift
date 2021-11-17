@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func didTap() {
-        let vc = RegisterVewController()
+        let vc = RegisterVC()
 //        navigationController?.pushViewController(vc, animated: true)
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true, completion: nil)

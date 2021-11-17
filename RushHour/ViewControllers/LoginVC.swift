@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class RootVC: UIViewController {
+class LoginVC: UIViewController {
     
     //MARK: -Элементы
     
@@ -32,7 +33,7 @@ class RootVC: UIViewController {
         field.backgroundColor = .white
         field.layer.cornerRadius = 6
         field.layer.borderWidth = 1
-        field.placeholder = "Логин или E-mail"
+        field.placeholder = "E-mail"
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.layer.borderColor = UIColor.cyan.cgColor
@@ -56,7 +57,7 @@ class RootVC: UIViewController {
     }()
     
     private let loginButton: IconTextButton = {
-        let button = IconTextButton()
+        let button = IconTextButton(type: .system)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 6
         return button
@@ -96,7 +97,7 @@ class RootVC: UIViewController {
     //MARK: -Действия кнопок
     
     @objc private func toRegisterVC(){
-        let vc = RegisterVewController()
+        let vc = RegisterVC()
         navigationController?.pushViewController(vc, animated: true)
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: "", style: .plain, target: nil, action: nil)
@@ -105,7 +106,22 @@ class RootVC: UIViewController {
     }
     
     @objc private func loginButtonTaped(){
-        print("...LOG IN...")
+        guard let login = login.text,
+              let password = password.text,
+              !login.isEmpty,
+              !password.isEmpty
+        else {
+                  return
+              }
+        FirebaseAuth.Auth.auth().signIn(withEmail: login, password: password, completion: {[weak self] res, err in
+            guard let self = self else {return}
+            guard let result = res, err == nil else {
+                print("Error login with email: \(login)")
+                return
+            }
+            print("Success login with: \(result.user)")
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        })
     }
     
     //MARK: -Размещение элементов
@@ -220,7 +236,7 @@ class RootVC: UIViewController {
 }
 
 
-extension RootVC: UITextFieldDelegate {
+extension LoginVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == login {
             password.becomeFirstResponder()
