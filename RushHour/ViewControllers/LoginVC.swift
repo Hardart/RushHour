@@ -101,6 +101,7 @@ class LoginVC: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: "", style: .plain, target: nil, action: nil)
+//        navigationController?.navigationBar.prefersLargeTitles = true
 //        vc.modalPresentationStyle = .popover
 //        self.present(vc, animated: true, completion: nil)
     }

@@ -17,10 +17,13 @@
 		24C5260C273BD87F009EBAF9 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C5260B273BD87F009EBAF9 /* RegisterVC.swift */; };
 		24C5260E273BE397009EBAF9 /* IconTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C5260D273BE397009EBAF9 /* IconTextButton.swift */; };
 		24C52610273BE5C7009EBAF9 /* TwoLinesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C5260F273BE5C7009EBAF9 /* TwoLinesButton.swift */; };
-		24CC3F76273C26C500DF7679 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC3F75273C26C500DF7679 /* ViewController.swift */; };
+		24CC3F76273C26C500DF7679 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC3F75273C26C500DF7679 /* TestVC.swift */; };
 		24D53DA92744583F002E3C04 /* ConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D53DA82744583F002E3C04 /* ConversationVC.swift */; };
 		24D53DAD27446089002E3C04 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D53DAC27446089002E3C04 /* DatabaseManager.swift */; };
 		24D53DAF274476F3002E3C04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24D53DAE274476F3002E3C04 /* GoogleService-Info.plist */; };
+		24E8D7C027452516007F995D /* ContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8D7BF27452516007F995D /* ContactsVC.swift */; };
+		24E8D7C2274525DC007F995D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8D7C1274525DC007F995D /* TabBarVC.swift */; };
+		24E8D7C427452824007F995D /* AppConfigVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8D7C327452824007F995D /* AppConfigVC.swift */; };
 		5CA0F37997FD7A5FB25199FC /* Pods_RushHour.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6F53BAE7D85C9A9DBC364E /* Pods_RushHour.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,10 +40,13 @@
 		24C5260B273BD87F009EBAF9 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		24C5260D273BE397009EBAF9 /* IconTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextButton.swift; sourceTree = "<group>"; };
 		24C5260F273BE5C7009EBAF9 /* TwoLinesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoLinesButton.swift; sourceTree = "<group>"; };
-		24CC3F75273C26C500DF7679 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		24CC3F75273C26C500DF7679 /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		24D53DA82744583F002E3C04 /* ConversationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationVC.swift; sourceTree = "<group>"; };
 		24D53DAC27446089002E3C04 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		24D53DAE274476F3002E3C04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		24E8D7BF27452516007F995D /* ContactsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsVC.swift; sourceTree = "<group>"; };
+		24E8D7C1274525DC007F995D /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		24E8D7C327452824007F995D /* AppConfigVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigVC.swift; sourceTree = "<group>"; };
 		45FD128BBEB9BCB85F18E329 /* Pods-RushHour.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RushHour.debug.xcconfig"; path = "Target Support Files/Pods-RushHour/Pods-RushHour.debug.xcconfig"; sourceTree = "<group>"; };
 		652A4F8283D54BD52FF344AF /* Pods-RushHour.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RushHour.release.xcconfig"; path = "Target Support Files/Pods-RushHour/Pods-RushHour.release.xcconfig"; sourceTree = "<group>"; };
 		DA6F53BAE7D85C9A9DBC364E /* Pods_RushHour.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RushHour.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,10 +115,10 @@
 		24CC3F74273C25F200DF7679 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				24CC3F75273C26C500DF7679 /* ViewController.swift */,
+				24CC3F75273C26C500DF7679 /* TestVC.swift */,
 				24C5260B273BD87F009EBAF9 /* RegisterVC.swift */,
 				2400DA09273EB6A700FD9164 /* LoginVC.swift */,
-				24D53DA82744583F002E3C04 /* ConversationVC.swift */,
+				24E8D7BE27452455007F995D /* TabBar */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -128,6 +134,17 @@
 				24D53DAC27446089002E3C04 /* DatabaseManager.swift */,
 			);
 			path = configure;
+			sourceTree = "<group>";
+		};
+		24E8D7BE27452455007F995D /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				24E8D7C327452824007F995D /* AppConfigVC.swift */,
+				24D53DA82744583F002E3C04 /* ConversationVC.swift */,
+				24E8D7BF27452516007F995D /* ContactsVC.swift */,
+				24E8D7C1274525DC007F995D /* TabBarVC.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		3BFADCC3DE335A5D3356C872 /* Frameworks */ = {
@@ -263,15 +280,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24CC3F76273C26C500DF7679 /* ViewController.swift in Sources */,
+				24CC3F76273C26C500DF7679 /* TestVC.swift in Sources */,
 				24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */,
 				24D53DAD27446089002E3C04 /* DatabaseManager.swift in Sources */,
 				24C5260C273BD87F009EBAF9 /* RegisterVC.swift in Sources */,
 				2400DA06273E747200FD9164 /* UIView anchors.swift in Sources */,
 				2400DA0A273EB6A700FD9164 /* LoginVC.swift in Sources */,
+				24E8D7C427452824007F995D /* AppConfigVC.swift in Sources */,
 				24C525FA273BD72E009EBAF9 /* SceneDelegate.swift in Sources */,
 				24D53DA92744583F002E3C04 /* ConversationVC.swift in Sources */,
 				24C52610273BE5C7009EBAF9 /* TwoLinesButton.swift in Sources */,
+				24E8D7C027452516007F995D /* ContactsVC.swift in Sources */,
+				24E8D7C2274525DC007F995D /* TabBarVC.swift in Sources */,
 				24C5260E273BE397009EBAF9 /* IconTextButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
