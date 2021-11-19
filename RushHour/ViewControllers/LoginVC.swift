@@ -25,36 +25,13 @@ class LoginVC: UIViewController {
         return logo
     }()
     
-    private let login: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .continue
-        field.backgroundColor = .white
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
+    private let login: TextFieldTemplate = {
+        let field = TextFieldTemplate()
         field.placeholder = "E-mail"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
         return field
     }()
     
-    private let password: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .done
-        field.backgroundColor = .white
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
-        field.placeholder = "Пароль"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.cyan.cgColor
-        field.isSecureTextEntry = true
-        return field
-    }()
+    private let password = PasswordField()
     
     private let loginButton: IconTextButton = {
         let button = IconTextButton(type: .system)
@@ -73,6 +50,7 @@ class LoginVC: UIViewController {
         button.sizeToFit()
         return button
     }()
+    
      
     //MARK: -Свойства
     
@@ -84,14 +62,19 @@ class LoginVC: UIViewController {
         login.delegate = self
         password.delegate = self
         
+        
         scrollViewSetup()
         logoSetup()
         loginSetup()
         loginButtonSetup()
         registerButtonSetup()
         
+        
+        
         loginButton.addTarget(self, action: #selector(loginButtonTaped), for: .touchUpInside)
         registerButton.addTarget(self, action: #selector(toRegisterVC), for: .touchUpInside)
+        
+    
     }
     
     //MARK: -Действия кнопок
@@ -160,8 +143,9 @@ class LoginVC: UIViewController {
             top: logo.bottomAnchor,
             paddingTop: 80,
             width: scrollView.widthAnchor,
-            heightConst: fieldHeight,
-            widthMultiplayer: fieldWith
+            widthMultiplayer: fieldWith,
+            heightConst: fieldHeight
+            
         )
         
         scrollView.addSubview(password)
@@ -170,8 +154,8 @@ class LoginVC: UIViewController {
             top: login.bottomAnchor,
             paddingTop: 20,
             width: scrollView.widthAnchor,
-            heightConst: fieldHeight,
-            widthMultiplayer: fieldWith
+            widthMultiplayer: fieldWith,
+            heightConst: fieldHeight
         )
     }
     
@@ -183,23 +167,33 @@ class LoginVC: UIViewController {
             iconSize: 30,
             spaceBetween: 5
         ))
+        
         scrollView.addSubview(loginButton)
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        loginButton.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 50).isActive = true
-        loginButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.7).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        loginButton.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: password.bottomAnchor,
+            paddingTop: 30,
+            width: scrollView.widthAnchor,
+            widthMultiplayer: 0.7,
+            heightConst: 50
+        )
     }
     
     func registerButtonSetup(){
         scrollView.addSubview(registerButton)
-        registerButton.translatesAutoresizingMaskIntoConstraints = false
-        registerButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor).isActive = true
-        registerButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20).isActive = true
-        registerButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.25).isActive = true
-        registerButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        registerButton.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: loginButton.bottomAnchor,
+            bottom: scrollView.bottomAnchor,
+            paddingTop: 10,
+            paddingBottom: -20,
+            width: scrollView.widthAnchor,
+            widthMultiplayer: 0.25,
+            heightConst: 30
+        )
     }
+    
+  
     
     //MARK: -Размер клавиатуры для ScrollView
     
@@ -231,9 +225,6 @@ class LoginVC: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    
-    
 }
 
 
@@ -248,3 +239,6 @@ extension LoginVC: UITextFieldDelegate {
         return true
     }
 }
+
+
+

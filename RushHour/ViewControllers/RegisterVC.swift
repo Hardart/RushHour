@@ -18,7 +18,7 @@ class RegisterVC: UIViewController {
         return view
     }()
     
-    private let logo: UIImageView = {
+    private let profileImg: UIImageView = {
         let logo = UIImageView()
         logo.image = UIImage(systemName: "person.circle.fill")
         logo.tintColor = .systemGray4
@@ -29,81 +29,32 @@ class RegisterVC: UIViewController {
         return logo
     }()
     
-    private let firstName: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .continue
-        field.backgroundColor = .systemGray6
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
+    private let firstName: TextFieldTemplate = {
+        let field = TextFieldTemplate()
         field.placeholder = "Введите ваше имя"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
-    private let lastName: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .continue
-        field.backgroundColor = .systemGray6
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
+ 
+    private let lastName: TextFieldTemplate = {
+        let field = TextFieldTemplate()
         field.placeholder = "Введите вашу фамилию"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
-    private let login: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .continue
-        field.backgroundColor = .systemGray6
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
+    private let login: TextFieldTemplate = {
+        let field = TextFieldTemplate()
         field.placeholder = "Укажите ваш логин"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
-    private let email: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .continue
-        field.backgroundColor = .systemGray6
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
+    private let email: TextFieldTemplate = {
+        let field = TextFieldTemplate()
         field.placeholder = "Укажите вашу почту"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.white.cgColor
         return field
     }()
     
-    private let password: UITextField = {
-        let field = UITextField()
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        field.returnKeyType = .done
-        field.backgroundColor = .systemGray6
-        field.layer.cornerRadius = 6
-        field.layer.borderWidth = 1
-        field.placeholder = "Пароль"
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
-        field.layer.borderColor = UIColor.white.cgColor
-        field.isSecureTextEntry = true
-        return field
-    }()
+    private let password = PasswordField()
     
     private let loginButton: IconTextButton = {
         let button = IconTextButton(type: .system)
@@ -136,9 +87,9 @@ class RegisterVC: UIViewController {
         
         loginButton.addTarget(self, action: #selector(registerButtonTaped), for: .touchUpInside)
 //        registerButton.addTarget(self, action: #selector(toRegisterVC), for: .touchUpInside)
-        logo.isUserInteractionEnabled = true
+        profileImg.isUserInteractionEnabled = true
         let logoTap = UITapGestureRecognizer(target: self, action: #selector(changeProfileImg))
-        logo.addGestureRecognizer(logoTap)
+        profileImg.addGestureRecognizer(logoTap)
     }
     
     
@@ -207,8 +158,8 @@ class RegisterVC: UIViewController {
     }
     
     func logoSetup(){
-        scrollView.addSubview(logo)
-        logo.anchors(
+        scrollView.addSubview(profileImg)
+        profileImg.anchors(
             centerX: scrollView.centerXAnchor,
             top: scrollView.topAnchor,
             paddingTop: 50,
@@ -218,7 +169,7 @@ class RegisterVC: UIViewController {
             heightMultiplayer: 0.3
         )
         
-        logo.layer.cornerRadius = view.width * 0.3 / 2
+        profileImg.layer.cornerRadius = view.width * 0.3 / 2
     }
     
     func loginSetup(){
@@ -229,7 +180,7 @@ class RegisterVC: UIViewController {
         scrollView.addSubview(login)
         login.translatesAutoresizingMaskIntoConstraints = false
         login.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        login.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 80).isActive = true
+        login.topAnchor.constraint(equalTo: profileImg.bottomAnchor, constant: 80).isActive = true
         login.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: fieldWith).isActive = true
         login.heightAnchor.constraint(equalToConstant: fieldHeight).isActive = true
         
@@ -416,7 +367,7 @@ extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDel
         picker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
 
-        self.logo.image = selectedImage
+        self.profileImg.image = selectedImage
         
     }
 
