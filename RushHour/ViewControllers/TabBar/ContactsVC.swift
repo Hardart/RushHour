@@ -11,9 +11,17 @@ class ContactsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = .systemGray5
         title = "Контакты"
+        
+        createNewContact()
     }
     
+    func createNewContact() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+    }
 
 }
+
+
+

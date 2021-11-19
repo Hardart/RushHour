@@ -41,12 +41,12 @@ class TabBarVC: UITabBarController {
         
        
         
-//        if FirebaseAuth.Auth.auth().currentUser == nil {
-//            let vc = LoginVC()
-//            let nav = UINavigationController(rootViewController: vc)
-//            nav.modalPresentationStyle = .fullScreen
-//            present(nav, animated: false)
-//        }
+        if FirebaseAuth.Auth.auth().currentUser == nil {
+            let vc = LoginVC()
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: false)
+        }
     }
     
 

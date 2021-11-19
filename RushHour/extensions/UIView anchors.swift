@@ -29,21 +29,21 @@ extension UIView {
     }
     
     func anchors(centerX: NSLayoutXAxisAnchor? = nil,
-                centerY: NSLayoutYAxisAnchor? = nil,
-                top: NSLayoutYAxisAnchor? = nil,
-                left: NSLayoutXAxisAnchor? = nil,
-                bottom: NSLayoutYAxisAnchor? = nil,
-                right: NSLayoutXAxisAnchor? = nil,
-                paddingTop: CGFloat = 0,
-                paddingLeft: CGFloat = 0,
-                paddingBottom: CGFloat = 0,
-                paddingRight: CGFloat = 0,
-                width: NSLayoutDimension? = nil,
-                height: NSLayoutDimension? = nil,
-                widthConst: CGFloat? = nil,
-                heightConst: CGFloat? = nil,
-                widthMultiplayer: CGFloat = 1,
-                heightMultiplayer: CGFloat = 1)
+                 centerY: NSLayoutYAxisAnchor? = nil,
+                 top: NSLayoutYAxisAnchor? = nil,
+                 left: NSLayoutXAxisAnchor? = nil,
+                 bottom: NSLayoutYAxisAnchor? = nil,
+                 right: NSLayoutXAxisAnchor? = nil,
+                 paddingTop: CGFloat = 0,
+                 paddingLeft: CGFloat = 0,
+                 paddingBottom: CGFloat = 0,
+                 paddingRight: CGFloat = 0,
+                 width: NSLayoutDimension? = nil,
+                 height: NSLayoutDimension? = nil,
+                 widthMultiplayer: CGFloat = 1,
+                 heightMultiplayer: CGFloat = 1,
+                 widthConst: CGFloat? = nil,
+                 heightConst: CGFloat? = nil)
     {
         
         translatesAutoresizingMaskIntoConstraints = false

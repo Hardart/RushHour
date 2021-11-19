@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2400DA06273E747200FD9164 /* UIView anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400DA05273E747200FD9164 /* UIView anchors.swift */; };
 		2400DA0A273EB6A700FD9164 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400DA09273EB6A700FD9164 /* LoginVC.swift */; };
+		243997412747F1AF006A221F /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243997402747F1AF006A221F /* ChatVC.swift */; };
+		246FA4BB2747C36C0053E949 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FA4BA2747C36C0053E949 /* PasswordField.swift */; };
+		246FA4BE2747C4FD0053E949 /* TextFieldTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FA4BD2747C4FD0053E949 /* TextFieldTemplate.swift */; };
 		24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C525F7273BD72E009EBAF9 /* AppDelegate.swift */; };
 		24C525FA273BD72E009EBAF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C525F9273BD72E009EBAF9 /* SceneDelegate.swift */; };
 		24C525FF273BD72E009EBAF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24C525FD273BD72E009EBAF9 /* Main.storyboard */; };
@@ -30,6 +33,9 @@
 /* Begin PBXFileReference section */
 		2400DA05273E747200FD9164 /* UIView anchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView anchors.swift"; sourceTree = "<group>"; };
 		2400DA09273EB6A700FD9164 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		243997402747F1AF006A221F /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		246FA4BA2747C36C0053E949 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
+		246FA4BD2747C4FD0053E949 /* TextFieldTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTemplate.swift; sourceTree = "<group>"; };
 		24C525F4273BD72E009EBAF9 /* RushHour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RushHour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24C525F7273BD72E009EBAF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24C525F9273BD72E009EBAF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +78,15 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		246FA4BC2747C3770053E949 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				246FA4BA2747C36C0053E949 /* PasswordField.swift */,
+				246FA4BD2747C4FD0053E949 /* TextFieldTemplate.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		24C525EB273BD72E009EBAF9 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +114,7 @@
 				24CC3F73273C25D600DF7679 /* customButtons */,
 				24CC3F74273C25F200DF7679 /* ViewControllers */,
 				2400DA04273E743300FD9164 /* extensions */,
+				246FA4BC2747C3770053E949 /* Views */,
 			);
 			path = RushHour;
 			sourceTree = "<group>";
@@ -119,6 +135,7 @@
 				24C5260B273BD87F009EBAF9 /* RegisterVC.swift */,
 				2400DA09273EB6A700FD9164 /* LoginVC.swift */,
 				24E8D7BE27452455007F995D /* TabBar */,
+				243997402747F1AF006A221F /* ChatVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -280,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				243997412747F1AF006A221F /* ChatVC.swift in Sources */,
 				24CC3F76273C26C500DF7679 /* TestVC.swift in Sources */,
 				24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */,
 				24D53DAD27446089002E3C04 /* DatabaseManager.swift in Sources */,
@@ -291,7 +309,9 @@
 				24D53DA92744583F002E3C04 /* ConversationVC.swift in Sources */,
 				24C52610273BE5C7009EBAF9 /* TwoLinesButton.swift in Sources */,
 				24E8D7C027452516007F995D /* ContactsVC.swift in Sources */,
+				246FA4BB2747C36C0053E949 /* PasswordField.swift in Sources */,
 				24E8D7C2274525DC007F995D /* TabBarVC.swift in Sources */,
+				246FA4BE2747C4FD0053E949 /* TextFieldTemplate.swift in Sources */,
 				24C5260E273BE397009EBAF9 /* IconTextButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
