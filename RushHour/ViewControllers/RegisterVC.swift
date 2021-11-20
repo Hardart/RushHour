@@ -7,10 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterVC: UIViewController {
     
     //MARK: -Элементы
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -57,7 +60,7 @@ class RegisterVC: UIViewController {
     private let password = PasswordField()
     
     private let loginButton: IconTextButton = {
-        let button = IconTextButton(type: .system)
+        let button = IconTextButton()
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 6
         return button
@@ -115,6 +118,8 @@ class RegisterVC: UIViewController {
               }
         
         //MARK: -Firebase регистрация
+        spinner.show(in: view, animated: true)
+        
         DatabaseManager.shared.doesUserExist(with: email, completion: {[weak self] exist in
             guard !exist else {
                 self?.alertUserAlreadyExist()
@@ -126,6 +131,10 @@ class RegisterVC: UIViewController {
          func successRegistration() {
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self] res, err in
                 guard let self = self else {return}
+                
+                DispatchQueue.main.async {
+                    self.spinner.dismiss(animated: true)
+                }
                 guard res != nil, err == nil else {
                     print("Error creating user: \(err!)")
                     return
@@ -178,18 +187,24 @@ class RegisterVC: UIViewController {
         let fieldWith: CGFloat = 0.7
         
         scrollView.addSubview(login)
-        login.translatesAutoresizingMaskIntoConstraints = false
-        login.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        login.topAnchor.constraint(equalTo: profileImg.bottomAnchor, constant: 80).isActive = true
-        login.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: fieldWith).isActive = true
-        login.heightAnchor.constraint(equalToConstant: fieldHeight).isActive = true
+        login.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: profileImg.bottomAnchor,
+            paddingTop: 80,
+            width: scrollView.widthAnchor,
+            widthMultiplayer: fieldWith,
+            heightConst: fieldHeight
+        )
         
         scrollView.addSubview(firstName)
-        firstName.translatesAutoresizingMaskIntoConstraints = false
-        firstName.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        firstName.topAnchor.constraint(equalTo: login.bottomAnchor, constant: spaceBetweenFields).isActive = true
-        firstName.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: fieldWith).isActive = true
-        firstName.heightAnchor.constraint(equalToConstant: fieldHeight).isActive = true
+        firstName.anchors(
+            centerX: scrollView.centerXAnchor,
+            top: login.bottomAnchor,
+            paddingTop: spaceBetweenFields,
+            width: scrollView.widthAnchor,
+            widthMultiplayer: fieldWith,
+            heightConst: fieldHeight
+        )
         
         scrollView.addSubview(lastName)
         lastName.translatesAutoresizingMaskIntoConstraints = false
@@ -221,6 +236,7 @@ class RegisterVC: UIViewController {
             iconSize: 30,
             spaceBetween: 5
         ))
+        
         scrollView.addSubview(loginButton)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true

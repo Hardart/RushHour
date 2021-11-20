@@ -18,6 +18,7 @@ class TabBarVC: UITabBarController {
         tabBar.backgroundColor = .systemGray6
         
         
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,6 +35,7 @@ class TabBarVC: UITabBarController {
             controls[i].title = titlesForControls[i]
             items[i].image = UIImage(systemName: iconsForControls[i])
         }
+        selectedIndex = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {

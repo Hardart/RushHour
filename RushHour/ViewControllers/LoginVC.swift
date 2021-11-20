@@ -7,10 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class LoginVC: UIViewController {
     
     //MARK: -Элементы
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -94,17 +97,23 @@ class LoginVC: UIViewController {
               let password = password.text,
               !login.isEmpty,
               !password.isEmpty
-        else {
-                  return
-              }
+        else {return}
+        
+        spinner.show(in: view, animated: true)
         FirebaseAuth.Auth.auth().signIn(withEmail: login, password: password, completion: {[weak self] res, err in
             guard let self = self else {return}
-            guard let result = res, err == nil else {
+            
+            DispatchQueue.main.async {
+                self.spinner.dismiss(animated: true)
+            }
+            
+            guard res != nil, err == nil else {
                 print("Error login with email: \(login)")
                 return
             }
-            print("Success login with: \(result.user)")
             self.navigationController?.dismiss(animated: true, completion: nil)
+            
+            
         })
     }
     

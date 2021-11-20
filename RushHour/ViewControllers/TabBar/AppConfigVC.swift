@@ -11,21 +11,23 @@ import FirebaseAuth
 class AppConfigVC: UIViewController {
     
     let tableView = UITableView()
+    
+    let emptyViewLabel = HiddenTextLabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .cyan
+        view.backgroundColor = .systemGray5
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
         
         tableViewLayout()
         configurationNavigationButtons()
+        setupNoViewText()
         
     }
     
-
     func tableViewLayout(){
         view.addSubview(tableView)
         tableView.anchors(
@@ -34,6 +36,13 @@ class AppConfigVC: UIViewController {
             bottom: view.bottomAnchor,
             right: view.rightAnchor
         )
+        tableView.isHidden = true
+    }
+    
+    func setupNoViewText(){
+        view.addSubview(emptyViewLabel)
+        emptyViewLabel.anchors(centerX: view.centerXAnchor, centerY: view.centerYAnchor)
+        emptyViewLabel.text = "Экран пока не настроен"
     }
     
     func configurationNavigationButtons() {
@@ -61,7 +70,7 @@ extension AppConfigVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Таблица"
+        cell.textLabel?.text = "Строка"
         return cell
     }
     

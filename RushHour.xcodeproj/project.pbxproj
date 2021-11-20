@@ -12,6 +12,10 @@
 		243997412747F1AF006A221F /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243997402747F1AF006A221F /* ChatVC.swift */; };
 		246FA4BB2747C36C0053E949 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FA4BA2747C36C0053E949 /* PasswordField.swift */; };
 		246FA4BE2747C4FD0053E949 /* TextFieldTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FA4BD2747C4FD0053E949 /* TextFieldTemplate.swift */; };
+		24BC8BAD27491A2600EB7918 /* HiddenTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC8BAC27491A2600EB7918 /* HiddenTextLabel.swift */; };
+		24BC8BB027492BAE00EB7918 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC8BAF27492BAE00EB7918 /* Message.swift */; };
+		24BC8BB227492BD700EB7918 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC8BB127492BD700EB7918 /* Sender.swift */; };
+		24BC8BB42749302500EB7918 /* NewConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC8BB32749302500EB7918 /* NewConversationVC.swift */; };
 		24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C525F7273BD72E009EBAF9 /* AppDelegate.swift */; };
 		24C525FA273BD72E009EBAF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C525F9273BD72E009EBAF9 /* SceneDelegate.swift */; };
 		24C525FF273BD72E009EBAF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24C525FD273BD72E009EBAF9 /* Main.storyboard */; };
@@ -36,6 +40,10 @@
 		243997402747F1AF006A221F /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		246FA4BA2747C36C0053E949 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		246FA4BD2747C4FD0053E949 /* TextFieldTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTemplate.swift; sourceTree = "<group>"; };
+		24BC8BAC27491A2600EB7918 /* HiddenTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenTextLabel.swift; sourceTree = "<group>"; };
+		24BC8BAF27492BAE00EB7918 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		24BC8BB127492BD700EB7918 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		24BC8BB32749302500EB7918 /* NewConversationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationVC.swift; sourceTree = "<group>"; };
 		24C525F4273BD72E009EBAF9 /* RushHour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RushHour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24C525F7273BD72E009EBAF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24C525F9273BD72E009EBAF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,8 +91,18 @@
 			children = (
 				246FA4BA2747C36C0053E949 /* PasswordField.swift */,
 				246FA4BD2747C4FD0053E949 /* TextFieldTemplate.swift */,
+				24BC8BAC27491A2600EB7918 /* HiddenTextLabel.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		24BC8BAE27492B9600EB7918 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				24BC8BAF27492BAE00EB7918 /* Message.swift */,
+				24BC8BB127492BD700EB7918 /* Sender.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		24C525EB273BD72E009EBAF9 = {
@@ -108,6 +126,7 @@
 		24C525F6273BD72E009EBAF9 /* RushHour */ = {
 			isa = PBXGroup;
 			children = (
+				24BC8BAE27492B9600EB7918 /* Models */,
 				24D53DAE274476F3002E3C04 /* GoogleService-Info.plist */,
 				24C52605273BD72F009EBAF9 /* Info.plist */,
 				24D53DAA27446027002E3C04 /* configure */,
@@ -136,6 +155,7 @@
 				2400DA09273EB6A700FD9164 /* LoginVC.swift */,
 				24E8D7BE27452455007F995D /* TabBar */,
 				243997402747F1AF006A221F /* ChatVC.swift */,
+				24BC8BB32749302500EB7918 /* NewConversationVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -300,6 +320,8 @@
 				243997412747F1AF006A221F /* ChatVC.swift in Sources */,
 				24CC3F76273C26C500DF7679 /* TestVC.swift in Sources */,
 				24C525F8273BD72E009EBAF9 /* AppDelegate.swift in Sources */,
+				24BC8BB227492BD700EB7918 /* Sender.swift in Sources */,
+				24BC8BB027492BAE00EB7918 /* Message.swift in Sources */,
 				24D53DAD27446089002E3C04 /* DatabaseManager.swift in Sources */,
 				24C5260C273BD87F009EBAF9 /* RegisterVC.swift in Sources */,
 				2400DA06273E747200FD9164 /* UIView anchors.swift in Sources */,
@@ -307,11 +329,13 @@
 				24E8D7C427452824007F995D /* AppConfigVC.swift in Sources */,
 				24C525FA273BD72E009EBAF9 /* SceneDelegate.swift in Sources */,
 				24D53DA92744583F002E3C04 /* ConversationVC.swift in Sources */,
+				24BC8BB42749302500EB7918 /* NewConversationVC.swift in Sources */,
 				24C52610273BE5C7009EBAF9 /* TwoLinesButton.swift in Sources */,
 				24E8D7C027452516007F995D /* ContactsVC.swift in Sources */,
 				246FA4BB2747C36C0053E949 /* PasswordField.swift in Sources */,
 				24E8D7C2274525DC007F995D /* TabBarVC.swift in Sources */,
 				246FA4BE2747C4FD0053E949 /* TextFieldTemplate.swift in Sources */,
+				24BC8BAD27491A2600EB7918 /* HiddenTextLabel.swift in Sources */,
 				24C5260E273BE397009EBAF9 /* IconTextButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
