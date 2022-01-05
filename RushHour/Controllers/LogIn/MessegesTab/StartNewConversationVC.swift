@@ -7,7 +7,12 @@
 
 import UIKit
 
-class NewConversationVC: UIViewController {
+class StartNewConversationVC: UIViewController {
+    
+    //MARK: - Элементы
+    private var users = [[String: String]]()
+    
+    private var hasFetched = false
 
     private let searchBar: UISearchBar = {
         let search = UISearchBar()
@@ -24,6 +29,7 @@ class NewConversationVC: UIViewController {
     
     let emptyViewLabel = HiddenTextLabel()
     
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,11 +47,13 @@ class NewConversationVC: UIViewController {
         searchBar.becomeFirstResponder()
     }
     
+    //MARK: - Selectors
     @objc func tapCancelButton() {
         dismiss(animated: true, completion: nil)
     }
     
-    func setupTableView() {
+    //MARK: - Private methods
+    fileprivate func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
@@ -55,25 +63,36 @@ class NewConversationVC: UIViewController {
             bottom: view.bottomAnchor,
             right: view.rightAnchor
         )
-        tableView.isHidden = true
+//        tableView.isHidden = true
     }
     
-    func setupNoViewText(){
+    fileprivate func setupNoViewText(){
         view.addSubview(emptyViewLabel)
         emptyViewLabel.anchors(centerX: view.centerXAnchor, centerY: view.centerYAnchor)
         emptyViewLabel.text = "Нет контактов"
+        emptyViewLabel.isHidden = true
     }
 }
 
 
-extension NewConversationVC: UISearchBarDelegate {
+extension StartNewConversationVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.replacingOccurrences(of: " ", with: "").isEmpty else { return }
         
+        searchUsers(query: searchText)
+    }
+    
+    func searchUsers(query: String) {
+        if hasFetched {
+            
+        } else {
+            
+        }
     }
 }
 
 
-extension NewConversationVC: UITableViewDelegate, UITableViewDataSource {
+extension StartNewConversationVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
          return 1
     }

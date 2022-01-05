@@ -12,7 +12,6 @@ import JGProgressHUD
 class RegisterVC: UIViewController {
     
     //MARK: -Элементы
-    
     private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
@@ -27,7 +26,7 @@ class RegisterVC: UIViewController {
         logo.tintColor = .systemGray4
         logo.clipsToBounds = true
         logo.contentMode = .scaleAspectFill
-        logo.layer.borderColor = UIColor.white.cgColor
+        logo.layer.borderColor = UIColor.systemGray.cgColor
         logo.layer.borderWidth = 5.0
         return logo
     }()
@@ -38,7 +37,6 @@ class RegisterVC: UIViewController {
         return field
     }()
     
- 
     private let lastName: TextFieldTemplate = {
         let field = TextFieldTemplate()
         field.placeholder = "Введите вашу фамилию"
@@ -66,9 +64,7 @@ class RegisterVC: UIViewController {
         return button
     }()
     
-     
     //MARK: -Свойства
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,18 +85,12 @@ class RegisterVC: UIViewController {
         
         
         loginButton.addTarget(self, action: #selector(registerButtonTaped), for: .touchUpInside)
-//        registerButton.addTarget(self, action: #selector(toRegisterVC), for: .touchUpInside)
         profileImg.isUserInteractionEnabled = true
         let logoTap = UITapGestureRecognizer(target: self, action: #selector(changeProfileImg))
         profileImg.addGestureRecognizer(logoTap)
     }
     
-    
     //MARK: -Действия кнопок
-    
-    
-    
-    
     @objc private func registerButtonTaped(){
         guard let email = email.text,
               let nickname = login.text,
@@ -117,12 +107,18 @@ class RegisterVC: UIViewController {
                   
               }
         
-        //MARK: -Firebase регистрация
         spinner.show(in: view, animated: true)
         
+        /// Firebase регистрация
         DatabaseManager.shared.doesUserExist(with: email, completion: {[weak self] exist in
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                self.spinner.dismiss(animated: true)
+            }
+            
             guard !exist else {
-                self?.alertUserAlreadyExist()
+                self.alertUserAlreadyExist()
                 return
             }
             successRegistration()
@@ -132,18 +128,35 @@ class RegisterVC: UIViewController {
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self] res, err in
                 guard let self = self else {return}
                 
-                DispatchQueue.main.async {
-                    self.spinner.dismiss(animated: true)
-                }
                 guard res != nil, err == nil else {
                     print("Error creating user: \(err!)")
                     return
                 }
+                let chatUser = ChatAppUser(nickname: nickname,
+                                           firstName: firstName,
+                                           lastName: lastName,
+                                           email: email)
                 
-                DatabaseManager.shared.insertUser(with: ChatAppUser(nickname: nickname,
-                                                                    firstName: firstName,
-                                                                    lastName: lastName,
-                                                                    email: email))
+                DatabaseManager.shared.insertUser(with: chatUser, completion: {success in
+                    if success  {
+                        // Загружаем фото профиля в базу
+                        guard let image = self.profileImg.image,
+                        let data = image.pngData() else {
+                            return
+                        }
+                        let filename = chatUser.profileImageFileName
+                        StorageManager.shared.uploadImage(with: data, fileName: filename, completion: {result in
+                            switch result {
+                            case .success(let urlString):
+                                UserDefaults.standard.set(urlString, forKey: "profile_image_url")
+                                print("got urlString")
+                            case .failure(let error):
+                                print("Storage manager error: \(error)")
+                            }
+                        
+                        })
+                    }
+                })
                 self.navigationController?.dismiss(animated: true, completion: nil)
             })
         }
@@ -155,7 +168,6 @@ class RegisterVC: UIViewController {
     }
     
     //MARK: -Размещение элементов
-    
     func scrollViewSetup(){
         view.addSubview(scrollView)
         scrollView.anchors(
@@ -173,8 +185,8 @@ class RegisterVC: UIViewController {
             top: scrollView.topAnchor,
             paddingTop: 50,
             width: scrollView.widthAnchor,
-            height: scrollView.widthAnchor,
             widthMultiplayer: 0.3,
+            height: scrollView.widthAnchor,
             heightMultiplayer: 0.3
         )
         
@@ -257,7 +269,8 @@ class RegisterVC: UIViewController {
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
         // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
         self.scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets }
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
     
     @objc func keyboardWillBeHidden(notification: Notification) {
         // Устанавливаем отступ внизу UIScrollView, равный 0
@@ -379,6 +392,7 @@ extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDel
         vc.allowsEditing = true
         present(vc, animated: true)
     }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}

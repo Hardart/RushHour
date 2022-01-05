@@ -87,30 +87,36 @@ class LoginVC: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: "", style: .plain, target: nil, action: nil)
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        vc.modalPresentationStyle = .popover
-//        self.present(vc, animated: true, completion: nil)
     }
     
     @objc private func loginButtonTaped(){
+        // проверка заполнения всех полей
         guard let login = login.text,
               let password = password.text,
               !login.isEmpty,
               !password.isEmpty
         else {return}
         
+        // появление спинера
         spinner.show(in: view, animated: true)
+        
+        // добавление пользователя в Firebase через Email
         FirebaseAuth.Auth.auth().signIn(withEmail: login, password: password, completion: {[weak self] res, err in
             guard let self = self else {return}
             
+            // исчезновение спинера
             DispatchQueue.main.async {
                 self.spinner.dismiss(animated: true)
             }
             
             guard res != nil, err == nil else {
+                // ошибка входа
                 print("Error login with email: \(login)")
                 return
             }
+            
+            UserDefaults.standard.set(login, forKey: "email")
+            
             self.navigationController?.dismiss(animated: true, completion: nil)
             
             
@@ -136,8 +142,8 @@ class LoginVC: UIViewController {
             top: scrollView.topAnchor,
             paddingTop: 50,
             width: scrollView.widthAnchor,
-            height: scrollView.widthAnchor,
             widthMultiplayer: 0.3,
+            height: scrollView.widthAnchor,
             heightMultiplayer: 0.3
         )
     }
@@ -193,8 +199,8 @@ class LoginVC: UIViewController {
         registerButton.anchors(
             centerX: scrollView.centerXAnchor,
             top: loginButton.bottomAnchor,
-            bottom: scrollView.bottomAnchor,
             paddingTop: 10,
+            bottom: scrollView.bottomAnchor,
             paddingBottom: -20,
             width: scrollView.widthAnchor,
             widthMultiplayer: 0.25,
@@ -213,7 +219,8 @@ class LoginVC: UIViewController {
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
         // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
         self.scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets }
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
     
     @objc func keyboardWillBeHidden(notification: Notification) {
         // Устанавливаем отступ внизу UIScrollView, равный 0

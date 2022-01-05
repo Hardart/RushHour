@@ -13,6 +13,10 @@ class DatabaseManager {
     
     private let database = Database.database(url: "https://chat-app-ios-a7b3a-default-rtdb.europe-west1.firebasedatabase.app").reference()
     
+    static func safeEmail(_ email: String) -> String {
+        let safeEmail = email.replacingOccurrences(of: ".", with: "-")
+        return safeEmail
+    }
     
 }
 
@@ -21,10 +25,9 @@ extension DatabaseManager {
     public func doesUserExist(with email: String,
                               completion: @escaping((Bool) -> Void)) {
         
-        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
-        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
-        database.child(safeEmail).observeSingleEvent(of: .value, with: {DataSnapshot in
-            guard DataSnapshot.value as? String != nil else {
+        let safeEmail = email.replacingOccurrences(of: ".", with: "-")
+        database.child("users/" + safeEmail).observeSingleEvent(of: .value, with: {DataSnapshot in
+            guard DataSnapshot.value as? [String: String] != nil else {
                 completion(false)
                 return
             }
@@ -33,12 +36,19 @@ extension DatabaseManager {
     }
     
     /// Добавление нового пользователя в базу
-    public func insertUser(with user: ChatAppUser){
-        database.child(user.safeEmail).setValue([
+    public func insertUser(with user: ChatAppUser, completion: @escaping (Bool) -> Void){
+        database.child("users").child(user.safeEmail).setValue([
             "nick_name": user.nickname,
             "first_name": user.firstName,
             "last_name": user.lastName
-        ])
+        ], withCompletionBlock: {error, _ in
+            guard error == nil else {
+                print("withCompletionBlock error")
+                completion(false)
+                return
+            }
+            completion(true)
+        })
     }
 }
 
@@ -50,8 +60,10 @@ struct ChatAppUser {
     let email: String
     
     var safeEmail: String {
-        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
-        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
-        return safeEmail
+        DatabaseManager.safeEmail(email)
+    }
+    
+    var profileImageFileName: String {
+        return "\(safeEmail)_profile_image.png"
     }
 }
