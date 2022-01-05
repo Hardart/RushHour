@@ -20,7 +20,7 @@ class TextFieldTemplate: UITextField {
        layer.borderWidth = 1
        leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
        leftViewMode = .always
-       layer.borderColor = UIColor.white.cgColor
+       layer.borderColor = UIColor.systemGray.cgColor
     }
     
     required init?(coder: NSCoder) {

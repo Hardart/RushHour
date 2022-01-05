@@ -9,6 +9,7 @@ target 'RushHour' do
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
+pod 'Firebase/Storage'
 
  # Other
 pod 'MessageKit'

@@ -80,6 +80,17 @@ class LoginVC: UIViewController {
     
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if FirebaseAuth.Auth.auth().currentUser != nil {
+            let vc = TabBarVC()
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            present(vc, animated: false)
+        }
+    }
+    
     //MARK: -Действия кнопок
     
     @objc private func toRegisterVC(){
@@ -114,8 +125,10 @@ class LoginVC: UIViewController {
                 print("Error login with email: \(login)")
                 return
             }
-            
-            UserDefaults.standard.set(login, forKey: "email")
+            guard let res = res else {
+                print("some")
+                return }
+            UserDataCache.shared.saveUIDToUserData(uid: res.user.uid, url: "")
             
             self.navigationController?.dismiss(animated: true, completion: nil)
             

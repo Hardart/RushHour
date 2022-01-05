@@ -8,6 +8,7 @@
 import UIKit
 
 class TestVC: UIViewController {
+    
     let button = TwoLinesButton()
     let button2 = TwoLinesButton()
     var changeCol = true
@@ -18,35 +19,25 @@ class TestVC: UIViewController {
         navigationItem.title = "Home"
         
         
-       
         
-        button.addTarget(self, action: #selector(didTap), for: .touchUpInside)
-        button2.addTarget(self, action: #selector(changeColor), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapButton1), for: .touchUpInside)
+        button2.addTarget(self, action: #selector(didTapButton2), for: .touchUpInside)
         
         setButtonAnchor()
         setButton2Anchor()
-        
-        
-        //MARK: создание хэдера
-        navigationController?.navigationBar.tintColor = .label
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .systemGray2
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        //        navigationController?.navigationBar.standardAppearance = appearance
-        //        navigationController?.navigationBar.compactAppearance = appearance
-        
         configurationNavigationButtons()
         
     }
     
-    @objc private func didTap() {
+    //MARK: - Обрабатываем нажатие кнопок
+    @objc private func didTapButton1() {
         let vc = RegisterVC()
 //        navigationController?.pushViewController(vc, animated: true)
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc private func changeColor(){
+    @objc private func didTapButton2(){
         if changeCol {
             UIView.animate(withDuration: 0.15) {
                 self.button2.backgroundColor = .cyan
@@ -60,8 +51,26 @@ class TestVC: UIViewController {
         changeCol = !changeCol
     }
     
+    //MARK: -структура в строку
+    func structToString() {
+//        let lastMessage = LastMessage(date: Date(), last_message: "Test String", is_read: false)
+//        let conv = Conversation(id: UUID().uuidString, sender_uid: "kjsfdhsgh", latest_message: lastMessage)
+//        let user = ChatAppUser(nick_name: "roy", first_name: "Cross", last_name: "Last", email: "asfaf", conversations: conv)
+//        let newUser = try? user.asDictionary()
+    }
     
-    //MARK: создание навигационных кнопок
+    func dateString(from date: Date) -> String {
+        let dateFormatter: DateFormatter = {
+            let format = DateFormatter()
+            format.dateFormat = "MM.dd.yyyy HH:mm:ss"
+            format.timeZone = .current
+            return format
+        }()
+        let dateString = dateFormatter.string(from: date)
+        return dateString
+    }
+    
+    //MARK: -создание навигационных кнопок
     func configurationNavigationButtons() {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(
@@ -75,7 +84,7 @@ class TestVC: UIViewController {
         ]
     }
     
-    //MARK: создание кнопок
+    //MARK: -создание кнопок
     func setButtonAnchor(){
         button.config(with: TwoLinesButtonModel(primaryText: "Hello", secondaryText: "World"))
         
@@ -103,4 +112,5 @@ class TestVC: UIViewController {
         button2.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
+
 

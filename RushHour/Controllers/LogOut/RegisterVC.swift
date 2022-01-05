@@ -64,7 +64,7 @@ class RegisterVC: UIViewController {
         return button
     }()
     
-    //MARK: -Свойства
+    //MARK: -ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,8 +78,8 @@ class RegisterVC: UIViewController {
         password.delegate = self
         
         scrollViewSetup()
-        logoSetup()
-        loginSetup()
+        profileImageSetup()
+        registrFieldsSetup()
         loginButtonSetup()
         
         
@@ -91,7 +91,8 @@ class RegisterVC: UIViewController {
     }
     
     //MARK: -Действия кнопок
-    @objc private func registerButtonTaped(){
+    @objc private func registerButtonTaped() {
+        
         guard let email = email.text,
               let nickname = login.text,
               let firstName = firstName.text,
@@ -107,57 +108,71 @@ class RegisterVC: UIViewController {
                   
               }
         
+        let chatUser = UserFullData( nick_name: nickname,
+                                    first_name: firstName,
+                                    last_name: lastName,
+                                    email: email,
+                                    conversations: nil )
+        
         spinner.show(in: view, animated: true)
+        
         
         /// Firebase регистрация
         DatabaseManager.shared.doesUserExist(with: email, completion: {[weak self] exist in
             guard let self = self else {return}
-            
-            DispatchQueue.main.async {
-                self.spinner.dismiss(animated: true)
-            }
-            
-            guard !exist else {
+
+            if exist == true {
+                DispatchQueue.main.async {
+                    self.spinner.dismiss(animated: true)
+                }
                 self.alertUserAlreadyExist()
-                return
+            } else {
+                successRegistration()
             }
-            successRegistration()
         })
         
-         func successRegistration() {
-            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self] res, err in
-                guard let self = self else {return}
-                
-                guard res != nil, err == nil else {
+        
+        func successRegistration() {
+            
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {[weak self] result, err in
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss(animated: true)
+                }
+                guard let result = result, err == nil else {
                     print("Error creating user: \(err!)")
                     return
                 }
-                let chatUser = ChatAppUser(nickname: nickname,
-                                           firstName: firstName,
-                                           lastName: lastName,
-                                           email: email)
-                
-                DatabaseManager.shared.insertUser(with: chatUser, completion: {success in
+                /// Добавляем пользователя в базу
+                DatabaseManager.shared.insertUser(with: chatUser, uid: result.user.uid, completion: { [weak self] success in
                     if success  {
-                        // Загружаем фото профиля в базу
-                        guard let image = self.profileImg.image,
-                        let data = image.pngData() else {
-                            return
-                        }
-                        let filename = chatUser.profileImageFileName
-                        StorageManager.shared.uploadImage(with: data, fileName: filename, completion: {result in
-                            switch result {
-                            case .success(let urlString):
-                                UserDefaults.standard.set(urlString, forKey: "profile_image_url")
-                                print("got urlString")
-                            case .failure(let error):
-                                print("Storage manager error: \(error)")
-                            }
                         
-                        })
+                        guard let image = self?.profileImg.image,
+                              let data = image.pngData() else {
+                                  return
+                              }
+                        let userUID = result.user.uid
+                        UserDataCache.shared.saveUIDToUserData(uid: userUID, url: "")
+                        // Загружаем фото профиля в базу если пользователь добавил его при регистрации
+                        if !image.isSymbolImage {
+                            
+                            let profileImageName = result.user.uid + "_profile_image.png"
+                            StorageManager.shared.uploadImage(with: data, fileName: profileImageName, completion: { result in
+                                switch result {
+                                case .success(let urlString):
+                                    UserDataCache.shared.saveUIDToUserData(uid: userUID, url: urlString)
+                                case .failure(let error):
+                                    print("Storage manager error: \(error)")
+                                }
+                                
+                            })
+                        }
                     }
+                    
                 })
-                self.navigationController?.dismiss(animated: true, completion: nil)
+                let vc = TabBarVC()
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self?.present(vc, animated: true)
             })
         }
     }
@@ -178,22 +193,23 @@ class RegisterVC: UIViewController {
         )
     }
     
-    func logoSetup(){
+    func profileImageSetup(){
+        let multiplayer = 0.4
         scrollView.addSubview(profileImg)
         profileImg.anchors(
             centerX: scrollView.centerXAnchor,
             top: scrollView.topAnchor,
             paddingTop: 50,
             width: scrollView.widthAnchor,
-            widthMultiplayer: 0.3,
+            widthMultiplayer: multiplayer,
             height: scrollView.widthAnchor,
-            heightMultiplayer: 0.3
+            heightMultiplayer: multiplayer
         )
-        
-        profileImg.layer.cornerRadius = view.width * 0.3 / 2
+        profileImg.layoutIfNeeded()
+        profileImg.layer.cornerRadius = profileImg.width / 2
     }
     
-    func loginSetup(){
+    func registrFieldsSetup(){
         let fieldHeight: CGFloat = 40
         let spaceBetweenFields: CGFloat = 10
         let fieldWith: CGFloat = 0.7
@@ -258,10 +274,7 @@ class RegisterVC: UIViewController {
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    
-    
     //MARK: -Размер клавиатуры для ScrollView
-    
     @objc func keyboardWasShown(notification: Notification) {
         // Получаем размер клавиатуры
         let info = notification.userInfo! as NSDictionary
@@ -295,7 +308,6 @@ class RegisterVC: UIViewController {
 }
 
 //MARK: -Расширения
-
 extension RegisterVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
@@ -396,11 +408,11 @@ extension RegisterVC: UIImagePickerControllerDelegate, UINavigationControllerDel
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
-
+        
         self.profileImg.image = selectedImage
         
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }

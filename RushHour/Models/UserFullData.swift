@@ -14,7 +14,6 @@ struct UserFullData: Codable {
     let last_name: String
     let email: String
     let conversations: [String: Conversation]?
-    var profileImage: String
     var fullName: String {
         first_name + " " + last_name
     }
@@ -24,6 +23,7 @@ struct Conversation: Codable {
     let id: String
     let recipient_name: String
     let recipient_uid: String
+    let recipient_image: String?
     var latest_message: LastMessage
 }
 

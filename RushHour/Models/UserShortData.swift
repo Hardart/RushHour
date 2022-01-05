@@ -10,4 +10,5 @@ import Foundation
 struct UserShortData: Codable {
     let name: String
     let uid: String
+    
 }

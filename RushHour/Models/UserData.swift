@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct UserData: Codable {
+    var uid: String
+    var imageURL: String
+}

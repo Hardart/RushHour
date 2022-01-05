@@ -9,15 +9,16 @@ import UIKit
 
 struct IconButtonModel {
     let icon: UIImage?
-    let title: String
+    let title: String?
     let background: UIColor?
     let iconSize: CGFloat
-    let spaceBetween: CGFloat
+    let spaceBetween: CGFloat?
 }
 
 final class IconTextButton: UIButton {
     
     private var iconSize = CGFloat()
+    
     private var elementSpace = CGFloat()
     
     private let label: UILabel = {
@@ -54,7 +55,7 @@ final class IconTextButton: UIButton {
         label.text = viewModel.title
         iconImage.image = viewModel.icon
         iconSize = viewModel.iconSize
-        elementSpace = viewModel.spaceBetween
+        elementSpace = viewModel.spaceBetween ?? 0
         backgroundColor = viewModel.background
         
     }

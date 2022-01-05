@@ -28,22 +28,24 @@ extension UIView {
         return self.frame.width + self.frame.origin.x
     }
     
-    func anchors(centerX: NSLayoutXAxisAnchor? = nil,
-                 centerY: NSLayoutYAxisAnchor? = nil,
-                 top: NSLayoutYAxisAnchor? = nil,
-                 left: NSLayoutXAxisAnchor? = nil,
-                 bottom: NSLayoutYAxisAnchor? = nil,
-                 right: NSLayoutXAxisAnchor? = nil,
-                 paddingTop: CGFloat = 0,
-                 paddingLeft: CGFloat = 0,
-                 paddingBottom: CGFloat = 0,
-                 paddingRight: CGFloat = 0,
-                 width: NSLayoutDimension? = nil,
-                 height: NSLayoutDimension? = nil,
-                 widthMultiplayer: CGFloat = 1,
-                 heightMultiplayer: CGFloat = 1,
-                 widthConst: CGFloat? = nil,
-                 heightConst: CGFloat? = nil)
+    func anchors(
+        centerX: NSLayoutXAxisAnchor? = nil,
+        centerY: NSLayoutYAxisAnchor? = nil,
+        top: NSLayoutYAxisAnchor? = nil,
+        paddingTop: CGFloat = 0,
+        left: NSLayoutXAxisAnchor? = nil,
+        paddingLeft: CGFloat = 0,
+        bottom: NSLayoutYAxisAnchor? = nil,
+        paddingBottom: CGFloat = 0,
+        right: NSLayoutXAxisAnchor? = nil,
+        paddingRight: CGFloat = 0,
+        width: NSLayoutDimension? = nil,
+        widthMultiplayer: CGFloat = 1,
+        height: NSLayoutDimension? = nil,
+        heightMultiplayer: CGFloat = 1,
+        widthConst: CGFloat? = nil,
+        heightConst: CGFloat? = nil
+    )
     {
         
         translatesAutoresizingMaskIntoConstraints = false

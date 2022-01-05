@@ -13,15 +13,18 @@ class AppConfigVC: UIViewController {
     let tableView = UITableView()
     
     let emptyViewLabel = HiddenTextLabel()
+    
+    public var imageProfile: UIView?
+    public var userData: UserShortData?
 
+    //MARK: -ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemGray5
+        view.backgroundColor = .systemGray6
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableHeaderView = setupHeaderView()
         
         tableViewLayout()
         configurationNavigationButtons()
@@ -29,34 +32,18 @@ class AppConfigVC: UIViewController {
         
     }
     
-    func setupHeaderView() -> UIView? {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-//        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
-//            return nil
-//        }
+        if let userData = UserDataCache.shared.getUserData() {
+            imageProfile = UserDataCache.shared.setupHeaderView(urlString: userData.imageURL, view: view)
+            tableView.tableHeaderView = imageProfile
+            DatabaseManager.shared.getUser(by: userData.uid) {[weak self] user in
+                self?.userData = user
+                self?.tableView.reloadData()
+            }
+        }
         
-//        let imageName = DatabaseManager.safeEmail(email) + "_profile_image.png"
-//        let path = "images/" + imageName
-        
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 200))
-        header.backgroundColor = .systemGray4
-        
-        let imageView = UIImageView()
-        let imageSize: CGFloat = 0.6
-        
-        header.addSubview(imageView)
-        imageView.anchors(
-            centerX: header.centerXAnchor,
-            centerY: header.centerYAnchor,
-            width: header.heightAnchor,
-            widthMultiplayer: imageSize,
-            height: header.heightAnchor,
-            heightMultiplayer: imageSize
-        )
-        imageView.backgroundColor = .systemGray6
-        imageView.layer.cornerRadius = header.height * imageSize / 2
-        imageView.contentMode = .scaleAspectFill
-        return header
     }
     
     func tableViewLayout(){
@@ -68,6 +55,7 @@ class AppConfigVC: UIViewController {
             right: view.rightAnchor
         )
         tableView.isHidden = false
+        tableView.backgroundColor = .systemGray5
     }
     
     func setupNoViewText(){
@@ -102,7 +90,8 @@ extension AppConfigVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Строка"
+        cell.textLabel?.text = userData?.name
+        cell.backgroundColor = .systemGray5
         return cell
     }
     

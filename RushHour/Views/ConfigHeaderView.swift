@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ConfigHeaderView: UIView {
 
@@ -14,7 +15,7 @@ class ConfigHeaderView: UIView {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
-        backgroundColor = .black
+//        backgroundColor = .systemGray5
         setupProfileImageLayouts()
     }
     
@@ -22,12 +23,16 @@ class ConfigHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(image: UIImage) {
+    public func configureWithURL(imageURL: URL) {
+        profileImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(systemName: "person.circle.fill"))
+    }
+    
+    public func configureWithImage(image: UIImage) {
         profileImageView.image = image
     }
     
     private func setupProfileImageLayouts() {
-        let imageSize: CGFloat = 0.7
+        let imageSize: CGFloat = 0.8
         addSubview(profileImageView)
         profileImageView.anchors(
             centerX: centerXAnchor,
@@ -39,8 +44,9 @@ class ConfigHeaderView: UIView {
         )
         profileImageView.layoutIfNeeded()
         profileImageView.clipsToBounds = true
-        profileImageView.backgroundColor = .systemGray6
         profileImageView.layer.cornerRadius = profileImageView.width / 2
         profileImageView.contentMode = .scaleAspectFill
     }
+    
+    
 }
